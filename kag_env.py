@@ -6,7 +6,7 @@ class ArmEnv(object):
     viewer = None
     dt = .1    # refresh rate
     action_bound = [-1, 1]
-    goal = {'x': 280., 'y': 200., 'l': 20}  # 40
+    goal = {'x': 200-42.5, 'y': 200+39.23, 'l': 20}  # 40   210-42.5, 200+39.23
     state_dim = 9
     action_dim = 2
 
@@ -29,11 +29,20 @@ class ArmEnv(object):
         # normalize features
         dist1 = [(self.goal['x'] - a1xy_[0]) / 400, (self.goal['y'] - a1xy_[1]) / 400]
         dist2 = [(self.goal['x'] - finger[0]) / 400, (self.goal['y'] - finger[1]) / 400]
-        r = -np.sqrt(0.01 * dist2[0] ** 2 + dist2[1] ** 2)
+        r = -np.sqrt(0.01 * dist2[0] ** 2 + dist2[1] ** 2) # 考虑增加比重
 
-        # done and reward
-        if self.goal['x'] - self.goal['l'] / 2 < finger[0] < self.goal['x'] + self.goal['l'] / 2:
-            if self.goal['y'] - self.goal['l'] / 2 < finger[1] < self.goal['y'] + self.goal['l'] / 2:
+        # # done and reward
+        # if self.goal['x'] - self.goal['l'] / 2 < finger[0] < self.goal['x'] + self.goal['l'] / 2:
+        #     if self.goal['y'] - self.goal['l'] / 2 < finger[1] < self.goal['y'] + self.goal['l'] / 2:
+        #         r += 1.
+        #         self.on_goal += 1
+        #         if self.on_goal > 50:
+        #             done = True
+        # else:
+        #     self.on_goal = 0
+
+        # done and reward  (finger[0] - self.goal['x'])**2 + (finger[1] - self.goal['y'])**2 < (self.goal['l'] / 2)**2
+        if (finger[0] - self.goal['x'])**2 + (finger[1] - self.goal['y'])**2 < (self.goal['l'] / 2)**2:
                 r += 1.
                 self.on_goal += 1
                 if self.on_goal > 50:
@@ -60,8 +69,12 @@ class ArmEnv(object):
         # print(f"l_max = {l_max}")
         theta = np.random.uniform(0, 2 * np.pi)  # 随机生成角度 θ
         r = l_max * np.sqrt(np.random.uniform(0, 1))  # 随机生成半径 r，使用 sqrt(random) 保证均匀分布
-        self.goal['x'] = 200 + r * np.cos(theta)  # 将极坐标转换为笛卡尔坐标 x
-        self.goal['y'] = 200 + r * np.sin(theta)  # 将极坐标转换为笛卡尔坐标 y
+        #是否 reset goal in training     暂时不考虑
+        flag_reset_goal = 1
+
+        if flag_reset_goal == 1:
+            self.goal['x'] = 200 + r * np.cos(theta)  # 将极坐标转换为笛卡尔坐标 x
+            self.goal['y'] = 200 + r * np.sin(theta)  # 将极坐标转换为笛卡尔坐标 y   
 
         # self.goal['x'] = np.random.rand()*400.
         # self.goal['y'] = np.random.rand()*400.
@@ -168,10 +181,10 @@ class ArmEnv(object):
 #         self.arm1.vertices = np.concatenate((xy01, xy02, xy11, xy12))
 #         self.arm2.vertices = np.concatenate((xy11_, xy12_, xy21, xy22))
 
-#     # convert the mouse coordinate to goal's coordinate
-#     def on_mouse_motion(self, x, y, dx, dy):
-#         self.goal_info['x'] = x
-#         self.goal_info['y'] = y
+#     # # convert the mouse coordinate to goal's coordinate
+#     # def on_mouse_motion(self, x, y, dx, dy):
+#     #     self.goal_info['x'] = x
+#     #     self.goal_info['y'] = y
 
 
 
@@ -236,3 +249,4 @@ if __name__ == '__main__':
     # # 显示图例
     plt.legend()
     plt.show()
+
