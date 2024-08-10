@@ -6,7 +6,7 @@ class ArmEnv(object):
     viewer = None
     dt = .1    # refresh rate
     action_bound = [-1, 1]
-    goal = {'x': 200-42.5, 'y': 200+39.23, 'l': 10}  # 40   210-42.5, 200+39.23
+    goal = {'x': 200-42.5, 'y': 200+39.23, 'l': 20}  # 40   210-42.5, 200+39.23
     state_dim = 9
     action_dim = 2
 
@@ -69,9 +69,12 @@ class ArmEnv(object):
         # print(f"l_max = {l_max}")
         theta = np.random.uniform(0, 2 * np.pi)  # 随机生成角度 θ
         r = l_max * np.sqrt(np.random.uniform(0, 1))  # 随机生成半径 r，使用 sqrt(random) 保证均匀分布
-        # #reset goal in training     暂时不考虑
-        # self.goal['x'] = 200 + r * np.cos(theta)  # 将极坐标转换为笛卡尔坐标 x
-        # self.goal['y'] = 200 + r * np.sin(theta)  # 将极坐标转换为笛卡尔坐标 y   
+        #是否 reset goal in training     暂时不考虑
+        flag_reset_goal = 1
+
+        if flag_reset_goal == 1:
+            self.goal['x'] = 200 + r * np.cos(theta)  # 将极坐标转换为笛卡尔坐标 x
+            self.goal['y'] = 200 + r * np.sin(theta)  # 将极坐标转换为笛卡尔坐标 y   
 
         # self.goal['x'] = np.random.rand()*400.
         # self.goal['y'] = np.random.rand()*400.

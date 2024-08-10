@@ -21,7 +21,7 @@ import matplotlib.patches as patches
 # 第一部分：绘制二维曲线
 fig1 = plt.figure()  # 创建第一个图形对象
 ax1 = fig1.add_subplot(111)  # 在第一个图形对象中添加子图
-ax1.plot(x_vals, y_vals, label='Data Curve')
+ax1.plot(x_vals, y_vals, label='end-effector trajectory')
 
 # 在图形中添加一个矩形 200-42.5, 220+39.23
 
@@ -32,8 +32,8 @@ ax1.plot(x_vals, y_vals, label='Data Curve')
 circle = patches.Circle((-42.5+5, 39.23), radius=10, linewidth=2, edgecolor='r', facecolor='none')  # 圆心坐标为(2, 15)，半径为5
 ax1.add_patch(circle)  # 将圆形添加到子图中
 
-ax1.set_xlabel('X axis')
-ax1.set_ylabel('Y axis')
+ax1.set_xlabel('X axis/cm')
+ax1.set_ylabel('Y axis/cm')
 ax1.legend()
 ax1.set_title('2D Curve Plot')
 
@@ -47,8 +47,8 @@ q1_vals = [0 if x > 6.18 else x for x in q1_vals]
 q2_vals = [0 if x > 6.18 else x for x in q2_vals]
 
 ax2.plot(q1_vals, q2_vals, label='Joint Angles')
-ax2.set_xlabel('θ1_vals')
-ax2.set_ylabel('θ2_vals')
+ax2.set_xlabel('θ1_vals/rad')
+ax2.set_ylabel('θ2_vals/rad')
 ax2.legend()
 ax2.set_title('Joint Angles Plot')
 

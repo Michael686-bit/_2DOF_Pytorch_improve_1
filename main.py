@@ -16,7 +16,7 @@ from rl_torch import DDPG
 
 MAX_EPISODES = 900
 MAX_EP_STEPS = 300
-ON_TRAIN = 1 #True
+ON_TRAIN = 0 #True
 
 # set env
 env = ArmEnv()
@@ -204,7 +204,7 @@ def eval_p2p():
     ax1.set_xlabel('X axis')
     ax1.set_ylabel('Y axis')
     ax1.legend()
-    ax1.set_title('2D Curve Plot')
+    ax1.set_title('end-effector position')
 
     # 第二部分：绘制关节角度图像
     fig2 = plt.figure()  # 创建第二个图形对象
