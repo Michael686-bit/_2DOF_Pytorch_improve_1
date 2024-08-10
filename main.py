@@ -128,7 +128,7 @@ def eval_p2p():
     # s = env.reset()
     s = env.reset_start()
     print(f"s = {s}")
-    env.set_goal(210-42.5, 200+39.23)  #[42.5 , 39.23]
+    env.set_goal(200-42.5 +5, 200+39.23 +8)  #[42.5 , 39.23]
     done = 0
     done_4p = 0
     timer = 0

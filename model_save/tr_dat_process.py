@@ -1,19 +1,19 @@
 # data_process\excel_test\data.xlsx
 
 import pandas as pd
-
+import numpy as np
 # 读取 Excel 文件
-df = pd.read_excel('Exy_q12_20240810_101304.xlsx')
+df = pd.read_excel('model_save\params_20240810_105513.xlsx')
 
 # 显示 DataFrame 的前几行
 print(df.head())
 
 # 访问具体的列
-x_vals = (df['x_vals']).tolist()
-y_vals = (df['y_vals']).tolist()
+reward_all = (df['reward_all']).tolist()
 
-# print(f"x_vals = {x_vals}")
-# print(f"y_vals = {y_vals}")
+# 计算滑动平均
+window_size = 10  # 滑动窗口大小，根据需要调整
+rolling_mean = pd.Series(reward_all).rolling(window=window_size).mean()
 
 # 画图
 import matplotlib.pyplot as plt
@@ -21,26 +21,19 @@ import matplotlib.patches as patches
 # 第一部分：绘制二维曲线
 fig1 = plt.figure()  # 创建第一个图形对象
 ax1 = fig1.add_subplot(111)  # 在第一个图形对象中添加子图
-ax1.plot(x_vals, y_vals, label='Data Curve')
+ax1.plot(np.arange(len(reward_all)), reward_all, label='Data Curve')
 
-# 在图形中添加一个矩形 200-42.5, 220+39.23
-
-rect = patches.Rectangle((-42.5-10 +10, 39.23-10), 10, 10, linewidth=2, edgecolor='r', facecolor='none')  # 矩形左下角坐标为(1, 5)，宽度为2，高度为10
-ax1.add_patch(rect)  # 将矩形添加到子图中
-
-ax1.set_xlabel('X axis')
-ax1.set_ylabel('Y axis')
+ax1.set_xlabel('step')
+ax1.set_ylabel('reward')
 ax1.legend()
 ax1.set_title('2D Curve Plot')
+
 
 # 第二部分：绘制关节角度图像
 fig2 = plt.figure()  # 创建第二个图形对象
 ax2 = fig2.add_subplot(111)  # 在第二个图形对象中添加子图
-q1_vals = df['q1_vals'].tolist()
-q2_vals = df['q2_vals'].tolist()
-# 对数据进行处理
-q1_vals = [0 if x > 6.18 else x for x in q1_vals]
-q2_vals = [0 if x > 6.18 else x for x in q2_vals]
+
+
 
 ax2.plot(q1_vals, q2_vals, label='Joint Angles')
 ax2.set_xlabel('q1_vals')
@@ -48,5 +41,5 @@ ax2.set_ylabel('q2_vals')
 ax2.legend()
 ax2.set_title('Joint Angles Plot')
 
-# 显示所有图形
+
 plt.show()
