@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 # 读取 Excel 文件
-df = pd.read_excel('model_save/params_20240810_105513.xlsx')
+df = pd.read_excel('model_save\params_20240810_124251.xlsx')
 
 # 显示 DataFrame 的前几行
 print(df.head())

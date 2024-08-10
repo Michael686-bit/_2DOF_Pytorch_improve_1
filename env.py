@@ -181,10 +181,10 @@ class Viewer(pyglet.window.Window):
         self.arm1.vertices = np.concatenate((xy01, xy02, xy11, xy12))
         self.arm2.vertices = np.concatenate((xy11_, xy12_, xy21, xy22))
 
-    # # convert the mouse coordinate to goal's coordinate
-    # def on_mouse_motion(self, x, y, dx, dy):
-    #     self.goal_info['x'] = x
-    #     self.goal_info['y'] = y
+    # convert the mouse coordinate to goal's coordinate
+    def on_mouse_motion(self, x, y, dx, dy):
+        self.goal_info['x'] = x
+        self.goal_info['y'] = y
 
 
 
