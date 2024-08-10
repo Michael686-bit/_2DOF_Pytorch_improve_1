@@ -14,9 +14,9 @@ from env import ArmEnv
 # from rl import DDPG
 from rl_torch import DDPG
 
-MAX_EPISODES = 20
+MAX_EPISODES = 900
 MAX_EP_STEPS = 300
-ON_TRAIN = 0 #True
+ON_TRAIN = 1 #True
 
 # set env
 env = ArmEnv()
@@ -33,6 +33,8 @@ def train():
     # start training
     for i in range(MAX_EPISODES):
         s = env.reset()
+        
+        env.arm_info['r'] 
         ep_r = 0.
         for j in range(MAX_EP_STEPS):
             # env.render()
