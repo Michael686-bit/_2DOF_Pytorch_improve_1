@@ -101,7 +101,7 @@ def eval():
     env.render()
     env.viewer.set_vsync(True)
     s = env.reset()
-    # print(f"s = {s}")
+    print(f"s = {s}")
     env.set_goal(240,240)
     timer = 0
     while True:
@@ -227,8 +227,8 @@ def eval_p2p():
 if ON_TRAIN:
     train()
 else:
-    eval()
-    # eval_p2p()
+    # eval()
+    eval_p2p()
     # cde = 0
 
 
